@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- Java 어떤 파일에 sql문을 보낼지 경로 설정
+    namespace 내에 mapper 경로 작성
+-->
+<mapper namespace="com.kh.khtAcademy.mapper.UserProfileMapper">
+    <!-- sql문을 보낼 때 보낼 표기명 id에 작성 -->
+    <select id="getAllUsers" >
+        SELECT * FROM USERPROFILE
+    </select>
+
+
+</mapper>
