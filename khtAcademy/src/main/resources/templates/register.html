@@ -4,9 +4,47 @@
     <meta charset="UTF-8">
     <title>MDCOMPANY - 회원가입</title>
     <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        .register-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 400px;
+            margin: auto;
+        }
+        .register-container form label {
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+
+        }
+        .register-container input,
+        .register-container select,
+        .register-container button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .register-container input:focus,
+        .register-container select:focus  {
+            border-color: orange;
+            outline: none;
+        }
+
+        .register-container button {
+            border: none;
+            background-color: lightblue;
+            cursor: pointer;
+        }
+        .register-container button:hover {
+            background-color: aliceblue;
+        }
+    </style>
 </head>
 <body>
-<th:block th:replace="layout/header :: header"></th:block>
+<th:block th:replace="~{layout/header :: header}"></th:block>
 
 
 <div class="register-container">
@@ -19,17 +57,38 @@
         <input type="email" id="email" name="email" required>
 
         <label for="birthdate">생년 월일 </label>
-        <input type="text" id="birthdate" name="birthdate" required>
+        <input type="date" id="birthdate" name="birthdate" required>
 
         <label for="accountBalance">계좌잔액</label>
-        <input type="number" id="accountBalance" name="accountBalance" required>
+        <input type="number"    id="accountBalance" name="accountBalance" required>
 
+        <!--
+        label 내부에 for를 작성하고 싶지 않다면 label 태그로 input이나 다른 태그 감싸기
+        for 는 id와 연결됨
+        -->
+        <label>성별 : </label> <!-- 연결해서 성별을 눌렀을 때 버튼처럼 사용될 것이 없기 때문에 for 작성할 이유가 없음 -->
+        <label>
+            <input type="radio" id="male"           name="gender"        value="MALE">남성
+        </label>
+        <label>
+            <input type="radio" id="female"          name="gender"       value="FEMALE">여성
+        </label>
 
+        <label for="hobbies">취미 : </label>
+        <select id="hobbies" name="hobbies" required>
+            <option value="READING">독서</option>
+            <option value="SPORTS">운동</option>
+            <option value="RUNNING">달리기</option>
+        </select>
 
-
-
-
-
+    <!--
+    button 기본 타입 submit 이므로 가입할 때 제출하기 전에
+    아이디 비밀번호 이메일을 정규식대로 작성은 잘 했는지 와 같은 체크를 하고 제출이 되길 원한다면
+    type="button"으로 변경하고
+    자바스크립트 id나 기능설정이름 작성 후
+    e.preventDefault() 코드를 맨 윗줄에 넣어 제출과 같은 동작 지연
+    -->
+    <button type="submit">가입하기</button>
     </form>
 
 
@@ -42,6 +101,6 @@
 
 
 
-<th:block th:replace="layout/footer :: footer"></th:block>
+<th:block th:replace="~{layout/footer :: footer}"></th:block>
 </body>
 </html>
