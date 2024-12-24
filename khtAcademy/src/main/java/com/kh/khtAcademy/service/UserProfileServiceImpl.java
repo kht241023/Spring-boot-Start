@@ -27,4 +27,11 @@ public class UserProfileServiceImpl implements UserProfileService {
             return userMap;
         }).collect(Collectors.toList());
     }
+
+    @Override
+    public void insertUser(User user) {
+        userProfileMapper.insertUser(user);
+    }
+
+
 }

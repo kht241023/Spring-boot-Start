@@ -3,13 +3,9 @@
 <configuration>
 
     <settings>
-        <!-- JAVA의 null 값을 DB의 null 로 인식하도록 설정 -->
         <setting name="jdbcTypeForNull" value="NULL" />
 
-        <!-- DB의 UnderScore (_) 표기법 과
-            JAVA의     Camel     표기법 이 서로 일치할 수 있도록 설정
-            JAVA에서 필드이름 (memberId) 과 DB 컬럼이름 (MEMBER_ID)가 서로 일치하도록 설정 -->
-        <setting name="mapUnderscoreToCamelCase" value="true" />
+         <setting name="mapUnderscoreToCamelCase" value="true" />
     </settings>
 
 

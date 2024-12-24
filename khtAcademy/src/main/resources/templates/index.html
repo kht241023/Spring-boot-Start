@@ -15,8 +15,8 @@
             <tr th:each="  u   : ${users}     ">
                 <td th:text="${u.userId}"></td>
                 <td th:text="${u.username}"></td>
-
-
+                <td th:text="${u.email}"></td>
+                <td th:text="${u.birthdate}"></td>
 
             </tr>
         </table>
