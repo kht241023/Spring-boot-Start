@@ -24,6 +24,7 @@ public class UserProfileServiceImpl implements UserProfileService {
             userMap.put("userId", user.getUserId());
             userMap.put("username", user.getUsername());
             userMap.put("email", user.getEmail());
+            userMap.put("birthdate", user.getBirthdate().toString());
             return userMap;
         }).collect(Collectors.toList());
     }
