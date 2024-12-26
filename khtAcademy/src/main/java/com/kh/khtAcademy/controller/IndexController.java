@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Map;
@@ -44,4 +45,21 @@ public class IndexController {
         model.addAttribute("msg", "회원가입이 성공적으로 완료되었습니다.");
         return "success"; //회원가입이 무사히 완료될 경우 success 페이지로 이동
     }
+
+    // get DB에서 값을 가져와 조회하거나 또는 endpoint를 통해 html 화면 보여주기 위해 작성
+    @GetMapping("/find-username") // endpoint = api = /find-username
+    public String findByUsername(){
+        return "find-username";
+    }
+
+    // 이메일로 이름을 찾은 결과 find-username-result 페이지에서 보여주기
+    @GetMapping("/find-username-result") // endpoint = api = /find-username-result
+    public String findByUsername(@RequestParam("email")String email, Model model){
+        String username = userProfileService.findByUsername(email);
+        model.addAttribute("username", username);
+        return "find-username-result";
+    }
+    /*
+    * controller - Get - Post - RequestParam
+    * */
 }

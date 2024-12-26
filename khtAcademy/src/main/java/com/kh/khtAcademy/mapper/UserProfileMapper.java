@@ -4,12 +4,14 @@ import com.kh.khtAcademy.dto.User;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
-
+// xml에 작성한 select insert update delete 쿼리를
+// xml 에서 작성한 id값을 통해 sql문 연결
 @Mapper // sql 에 작성한 id를 가져와서 자바에서 사용하겠다는 설정 표기
 public interface UserProfileMapper {
     // xml 파일에 id 값 설정한 기능 목록 조회
 
     // 모든 유저 목록 조회
+    //SELECT * FROM USERPROFILE
     List<User> getAllUsers();
 
     // 유저 저장하기

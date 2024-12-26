@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xml:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>MDCOMPANY - FIND NAME</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<th:block th:replace="~{layout/header :: header}"></th:block>
+
+<div class="find-container">
+    <h1>이메일을 통해 유저이름 찾기</h1>
+    <!-- form method = "get"
+     form 을 통해 DB에 특정 값을 저장할 때 : post  == insert
+     form 을 통해 DB에 특정 값을 가져올 때 : get   == select
+
+            action =  유저 이름 찾기 버튼을 눌렀을 때 이동할 페이지 endpoint 작성
+            endpoint = api(Application Programming Interface)
+     -->
+    <form action="/find-username-result" method="get">
+        <label for="email">이메일 : </label>
+        <input type="email" id="email" name="email" required>
+        <button type="submit">유저 이름 찾기</button>
+    </form>
+</div>
+
+<th:block th:replace="~{layout/footer :: footer}"></th:block>
+</body>
+</html>
