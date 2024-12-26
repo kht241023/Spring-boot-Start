@@ -22,4 +22,7 @@ public interface UserProfileMapper {
 
     // 이름과 성별로 이메일 찾기
     String findByEmail(String username, String gender);
+
+    // 유저 아이디 번호 통해서 유저에 대한 정보 가져오기
+    User getUser(int userId);
 }

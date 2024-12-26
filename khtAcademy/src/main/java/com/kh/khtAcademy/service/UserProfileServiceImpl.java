@@ -56,5 +56,15 @@ public class UserProfileServiceImpl implements UserProfileService {
         return userProfileMapper.findByUsername(email);
     }
 
+    @Override
+    public String findByEmail(String username, String gender) {
+        return userProfileMapper.findByEmail(username, gender);
+    }
+
+    @Override
+    public User getUser(int userId) {
+        return userProfileMapper.getUser(userId);     //sql문 호출할 수 있도록 mapper에 전달
+    }
+
 
 }

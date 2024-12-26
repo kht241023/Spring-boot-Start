@@ -50,6 +50,7 @@
 <div class="register-container">
     <form action="/register-success" method="post">
 
+
         <label for="username">이름</label>
         <input type="text" id="username" name="username" required>
 
@@ -80,7 +81,8 @@
             <option value="SPORTS">운동</option>
             <option value="RUNNING">달리기</option>
         </select>
-
+    <label for="profileImagePath">프로필사진 설정하기</label>
+        <input type="file" id="profileImagePath" name="profileImagePath">
     <!--
     button 기본 타입 submit 이므로 가입할 때 제출하기 전에
     아이디 비밀번호 이메일을 정규식대로 작성은 잘 했는지 와 같은 체크를 하고 제출이 되길 원한다면

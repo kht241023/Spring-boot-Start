@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -54,11 +51,47 @@ public class IndexController {
 
     // 이메일로 이름을 찾은 결과 find-username-result 페이지에서 보여주기
     @GetMapping("/find-username-result") // endpoint = api = /find-username-result
-    public String findByUsername(@RequestParam("email")String email, Model model){
+    public String findByUsername(@RequestParam("email")String email,
+                                 Model model){
         String username = userProfileService.findByUsername(email);
         model.addAttribute("username", username);
         return "find-username-result";
     }
+
+    @GetMapping("/find-email") // endpoint = api = /find-username
+    public String findByEmail(){
+        return "find-email";
+    }
+    @GetMapping("/find-email-result")
+    public String findByEmail(@RequestParam("username")String username,
+                              @RequestParam("gender") String gender,
+                              Model model){
+            userProfileService.findByEmail(username,gender);
+            model.addAttribute("email", userProfileService.findByEmail(username,gender));
+        return "find-email-result";
+    }
+
+    /**
+     * @GetMapping("/detail/{userId}")   특정변수에 대한 값으로 페이지 변동을 원한다면 {변수이름}
+     * @param userId
+     * @param model
+     * @return
+     */
+    @GetMapping("/detail/{userId}")
+    public String getUser(@PathVariable int userId, Model model){
+        /*
+            자료형으로 service 변수명 설정할 때 어떤 자료형을 사용해야할지 모르겠다면
+            0. service에서 기능 명칭 앞에 자료형을 무엇을 작성했는지 확인하는 것이 제일 좋음
+            1. String 작성해보기   2. Model 작성해보기  3. DTO에 작성한 클래스명칭 작성해보기
+            ※ 단 자료형이 void일 경우 변수명 설정이 어려움
+        */
+       User user =  userProfileService.getUser(userId);
+       model.addAttribute("user",user);
+       return "detail";
+    }
+
+
+
     /*
     * controller - Get - Post - RequestParam
     * */
