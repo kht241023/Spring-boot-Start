@@ -1,9 +1,204 @@
-.logo img {
-    width:200px;
+body {
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #555;
 }
 
-.header-nav a {
+a {
     text-decoration: none;
-    color: palegreen;
-    font-size: 50px;
+    color: inherit;
+    transition: color 0.3s ease;
 }
+
+a:hover {
+    color: #baaaf7;
+}
+
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #baaaf7;
+    color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+header .logo img {
+    height: 40px;
+}
+
+header .header-nav {
+    display: flex;
+    gap: 20px;
+}
+
+header .header-nav a {
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+}
+
+header .sign-in a {
+    font-size: 16px;
+    padding: 5px 15px;
+    border: 2px solid white;
+    border-radius: 20px;
+    color: white;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+header .sign-in a:hover {
+    background-color: white;
+    color: #baaaf7;
+}
+
+footer {
+    background-color: #555;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    font-size: 14px;
+    margin-top: auto;
+}
+
+footer p {
+    margin: 5px 0;
+}
+
+footer p:last-child {
+    color: #ccc;
+}
+
+
+@media (max-width: 768px) {
+    header .header-nav {
+        gap: 10px;
+    }
+
+    header .header-nav a {
+        font-size: 14px;
+    }
+
+    header .sign-in a {
+        font-size: 14px;
+    }
+
+    .main-container {
+        padding: 15px;
+    }
+
+    .find-container {
+        padding: 15px;
+    }
+
+    footer {
+        font-size: 12px;
+        padding: 15px;
+    }
+}
+
+
+/************************** main ***********************************/
+.main-container, .find-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    position: relative;
+}
+
+
+.main-container {
+    max-width: 1200px;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.main-container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #baaaf7;
+}
+
+.main-container table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.main-container table th,
+.main-container table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+.main-container table th {
+    background-color: #baaaf7;
+    color: white;
+}
+
+.main-container table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.main-container table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/************************** find ***********************************/
+
+.find-container {
+    max-width: 600px;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.find-container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #baaaf7;
+}
+
+.find-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.find-container form label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.find-container form input,
+.find-container form button {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.find-container form button {
+    background-color: #baaaf7;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.find-container form button:hover {
+    background-color: #125800;
+}
+
+

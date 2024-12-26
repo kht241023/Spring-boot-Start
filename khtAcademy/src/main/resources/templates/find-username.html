@@ -17,9 +17,24 @@
             action =  유저 이름 찾기 버튼을 눌렀을 때 이동할 페이지 endpoint 작성
             endpoint = api(Application Programming Interface)
      -->
-    <form action="/find-username-result" method="get">
+    <script>
+        function checkEmail(event) {
+            const email = document.getElementById("email").value;
+            const emailRegex = "이메일 정규식";
+
+            if (!emailRegex.test(email)){
+                alert("유효한 이메일을 입력하세요.");
+                email.focus();
+                event.preventDefault();
+                return false;// 제출금지
+            }
+
+            return true; //유효한 경우 폼 제출 진행
+        }
+    </script>
+    <form action="/find-username-result" method="get" onsubmit="return checkEmail(event)">
         <label for="email">이메일 : </label>
-        <input type="email" id="email" name="email" required>
+        <input type="email" id="email" name="email">
         <button type="submit">유저 이름 찾기</button>
     </form>
 </div>
