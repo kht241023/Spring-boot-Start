@@ -68,8 +68,8 @@
                                                     유저가 직접 작성하지 않음
      -->
     <insert id="insertUser">
-        INSERT INTO USERPROFILE (USERNAME, EMAIL, BIRTHDATE, ACCOUNT_BALANCE, GENDER, HOBBIES)
-        VALUES (#{username}, #{email}, #{birthdate}, #{accountBalance}, #{gender}, #{hobbies});
+        INSERT INTO USERPROFILE (USERNAME, EMAIL, BIRTHDATE, ACCOUNT_BALANCE, GENDER, HOBBIES, PROFILE_IMAGE_PATH)
+        VALUES (#{username}, #{email}, #{birthdate}, #{accountBalance}, #{gender}, #{hobbies}, #{profileImagePath});
     </insert>
 
     <!-- 이름 찾기 SQL : 일치하는 이메일이 조회되는 경우 -->

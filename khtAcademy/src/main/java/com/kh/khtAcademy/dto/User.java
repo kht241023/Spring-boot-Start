@@ -39,6 +39,7 @@ public class User {
     private String accountBalance;
     private String gender;
     private String hobbies;
+    private String profileImagePath;
 
 
 }

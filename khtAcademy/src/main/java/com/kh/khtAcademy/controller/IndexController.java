@@ -3,12 +3,15 @@ package com.kh.khtAcademy.controller;
 import com.kh.khtAcademy.dto.User;
 import com.kh.khtAcademy.service.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -37,12 +40,39 @@ public class IndexController {
 
     // DB에 값을 집어넣을 때는 PostMapping 사용하고 엔드포인트 form action에서 작성한
     // 주소를 엔드포인트로 지정
+    /*
+    *  Whitelabel Error Page Current request is not a multipart request
+    *  1. html 파일에서 enctype="multipart/form-data" 데이터 설정을 했는지 확인
+    *  2. springboot  파일업로드를 지원할 수 있도록 설정 했는지 application.properties / config.properties 확인
+    * spring.servlet.multipart.enabled=true  -> 사진 업로드 허용
+    * spring.servlet.multipart.max-file-size=10MB ->파일 하나당 최대 10MB
+     * spring.servlet.multipart.max-request-size=10MB -> 한번에 업로드 가능한 모든 파일에 총합 크기
+    * */
+    @PostMapping("/register-success")
+    public String registerSuccess( @RequestParam("username")   String username,
+                                   @RequestParam("email")    String email,
+                                   @RequestParam("birthdate")@DateTimeFormat(pattern = "yyyy-MM-dd") Date birthdate,
+                                   @RequestParam("accountBalance")   String accountBalance,
+                                   @RequestParam("gender")   String gender,
+                                   @RequestParam("hobbies")   String hobbies,
+                                   @RequestParam("profileImagePath")   MultipartFile profileImagePath,
+                                      Model model) {
+
+        userProfileService.insertUser(username, email, birthdate, accountBalance, gender, hobbies, profileImagePath);
+
+        model.addAttribute("msg", "회원가입이 성공적으로 완료되었습니다.");
+        return "success"; //회원가입이 무사히 완료될 경우 success 페이지로 이동
+    }
+
+
+    /*
     @PostMapping("/register-success")
     public String registerSuccess(@ModelAttribute("user") User user, Model model) {
         userProfileService.insertUser(user);
         model.addAttribute("msg", "회원가입이 성공적으로 완료되었습니다.");
         return "success"; //회원가입이 무사히 완료될 경우 success 페이지로 이동
     }
+    * */
 
     // get DB에서 값을 가져와 조회하거나 또는 endpoint를 통해 html 화면 보여주기 위해 작성
     @GetMapping("/find-username") // endpoint = api = /find-username
