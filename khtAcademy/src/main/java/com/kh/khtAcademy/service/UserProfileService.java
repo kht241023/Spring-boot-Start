@@ -28,4 +28,5 @@ public interface UserProfileService {
 
     // 유저 상세보기
     User getUser(int userId);
+
 }

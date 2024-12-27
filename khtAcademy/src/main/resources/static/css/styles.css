@@ -202,3 +202,62 @@ footer p:last-child {
 }
 
 
+/************************* register ***************************/
+.register-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 400px;
+    margin: auto;
+}
+.register-container form label {
+    font-weight: bold;
+    margin-top: 10px;
+    display: block;
+
+}
+.register-container input,
+.register-container select,
+.register-container button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+.register-container input:focus,
+.register-container select:focus  {
+    border-color: orange;
+    outline: none;
+}
+
+.register-container button {
+    border: none;
+    background-color: lightblue;
+    cursor: pointer;
+}
+.register-container button:hover {
+    background-color: aliceblue;
+}
+
+/*  class = .    id = #  태그 자체는 특수문자를 붙이지 않고 작성
+    띄어쓰기 :  태그 내부에 접근
+    , : 클래스나 아이디를 구분지어서 동시에 여러 클래스나 아이디에 동일한 스타일 적용
+ */
+.register-container form #profileImagePath{
+    display: none;
+}
+.register-container form .file-label {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: lightblue;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 20px;
+}
+.register-container form .file-label:hover {
+    background-color: dodgerblue;
+}

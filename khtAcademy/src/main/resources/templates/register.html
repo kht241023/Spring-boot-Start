@@ -4,55 +4,59 @@
     <meta charset="UTF-8">
     <title>MDCOMPANY - 회원가입</title>
     <link rel="stylesheet" href="/css/styles.css">
-    <style>
-        .register-container {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            max-width: 400px;
-            margin: auto;
-        }
-        .register-container form label {
-            font-weight: bold;
-            margin-top: 10px;
-            display: block;
-
-        }
-        .register-container input,
-        .register-container select,
-        .register-container button {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-        .register-container input:focus,
-        .register-container select:focus  {
-            border-color: orange;
-            outline: none;
-        }
-
-        .register-container button {
-            border: none;
-            background-color: lightblue;
-            cursor: pointer;
-        }
-        .register-container button:hover {
-            background-color: aliceblue;
-        }
-    </style>
 </head>
 <body>
 <th:block th:replace="~{layout/header :: header}"></th:block>
 
+<!--
+id   : JavaScript 기능이나 label for 와 태그를 연결짓는데 주로 사용
+name : Java 내 존재하는 Controller에 태그 내에 사용자가 선택하거나 작성한 속성값을 키-값으로 전달
+        name = 키    value = 속성
 
+        input 태그 내에는 기본적으로 value 라는 기능이 설정되어 있음
+        사용자 닉네임 이름 비밀번호 와 같이 사용자가 직접적으로 값을 설정해주어야 하는 input 태그에는
+        value 값을 직접적으로 개발자가 작성해서 임의값을 설정해놓지 않음
+
+        하지만 checkbox 나 radio select-option 과 같이 개발자가 지정한 선택지 내에서 사용자가 선택해
+        제출하기 원하는 경우에는 DB에 개발자가 원하는 값 중 하나를 택해서 넣어주기 위해
+        value 값을 개발자가 원하는 값으로 작성해서 사용
+
+        아래와 같이 value="" 형식으로 기본적으로 value가 내장되어 있음 작성하지 않아도 value="" 로 설정되어 있음
+        <input type="text" id="username" name="username"  value = "" required>
+        위 코드와 아래 코드는 같은 코드  다만 직접적으로 value를 작성해주었는지 안해주었는지 차이
+        <input type="text" id="username" name="username"  required>
+
+         <input type="text" id="username" name="username"   value = "안녕하세요."  required>
+         초기에 value 값을 안녕하세요. 로 작성하고 사용자가 추후에 안녕하세요를 지우고 홍길동을 작성하면
+         마지막에 controller에는 홍길동이 들어감
+         value 값은 항상 마지막에 작성한 값이 들어감
+
+         Controller 에서는
+                                     name   value 만         바라봄!!!!
+-->
 <div class="register-container">
-    <form action="/register-success" method="post">
+    <!--
+    enctype = form 데이터를 전송할 때 글자타입만 작성이 되어 있는지,
+                                      글자 이외 다른 형식이 작성 되어있는지 작성하는 기능
+        - 종류
+            application/x-www-form-urlencoded : 기본타입
+                                                폼 데이터가 키-값 쌍으로 URL 인코딩되어 전송
+                                                공백은 +로 변환 , 특수 문자는 %로 인코딩
+                                                & 키=값 의 구분자                   키1=값1&키2=값2   키=값 그다음에 키1=값1 그다음에 키2=값2
+                                                파일 업로드를 지원하지 않음
+                                                사용 : 글자 형식, 드롭다운, 체크박스 등 기본 글자 데이터 전송
 
+           multipart/form-data                : 폼 데이터를 여러 부분으로 나누어 전송
+                                                텍스트와 파일 데이터를 함께 전송할 수 있음
+                                                사용 : 파일 업로드, 이미지 업로드 글자 이외 추가 파일 업로드 할 때 사용
+          text/plain                          : 데이터를 단순 텍스트 형식으로 전송
+                                                공백은 그대로 유지되고, 특수 문자는 인코딩이 되지 않음
+                                                사용 : 디버깅(문제찾는) 용도 또는 단순히 온전한 글자 데이터만 전송
 
+    -->
+    <form action="/register-success" method="post" enctype="multipart/form-data">
         <label for="username">이름</label>
-        <input type="text" id="username" name="username" required>
+        <input type="text" id="username" name="username"   value = "안녕하세요."  required>
 
         <label for="email">이메일</label>
         <input type="email" id="email" name="email" required>
@@ -62,7 +66,6 @@
 
         <label for="accountBalance">계좌잔액</label>
         <input type="number"    id="accountBalance" name="accountBalance" required>
-
         <!--
         label 내부에 for를 작성하고 싶지 않다면 label 태그로 input이나 다른 태그 감싸기
         for 는 id와 연결됨
@@ -81,7 +84,7 @@
             <option value="SPORTS">운동</option>
             <option value="RUNNING">달리기</option>
         </select>
-    <label for="profileImagePath">프로필사진 설정하기</label>
+    <label for="profileImagePath" class="file-label">프로필사진 설정하기</label>
         <input type="file" id="profileImagePath" name="profileImagePath">
     <!--
     button 기본 타입 submit 이므로 가입할 때 제출하기 전에

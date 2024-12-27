@@ -25,4 +25,6 @@ public interface UserProfileMapper {
 
     // 유저 아이디 번호 통해서 유저에 대한 정보 가져오기
     User getUser(int userId);
+
+
 }

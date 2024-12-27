@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 
 import java.util.List;
 import java.util.Map;
@@ -89,8 +90,6 @@ public class IndexController {
        model.addAttribute("user",user);
        return "detail";
     }
-
-
 
     /*
     * controller - Get - Post - RequestParam
