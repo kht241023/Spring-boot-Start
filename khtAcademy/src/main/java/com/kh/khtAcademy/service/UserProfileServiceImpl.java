@@ -62,10 +62,20 @@ public class UserProfileServiceImpl implements UserProfileService {
         // 1. 프로퍼티를 이용해서 기본 파일 저장 경로 가져오기
         Properties properties = System.getProperties();
         //  user.home = C://Users/user1 까지의 경로가 가져와짐     user.dir = khtAcademy 경로를 가져옴
+        // C:/Users/user1/Desktop/SpringBoot-workspace/khtAcademy/khtAcademy
+        String projectDir = System.getProperty("user.dir") +"/src/main/resources/static/images/profile_img/";
+        System.out.println("projectDir : " + projectDir);
+        /*
+        * projectDir 을 이용해서 static/images/ 내에 profile_img 폴더를 만들고
+        * resource 안에 /static/images/ 내에 이미지 저장
+        *
+        * */
         String baseDir = System.getProperty("user.home") + "/Desktop/user_images/"; //바탕화면 에서 user_images 폴더에 사진이 저장됨
 
         // 2. 디렉토리(폴더) 가 존재하지 않으면 생성
-        File imgFolder = new File(baseDir);
+        //File imgFolder = new File(baseDir);
+
+        File imgFolder = new File(projectDir);
         if (!imgFolder.exists()) { //만약에 이미지 폴더가 존재하지 않는게 맞다면 ~!
             imgFolder.mkdirs();     // 존재하지 않는 폴더들 모두 생성해 ~!
         }
@@ -74,7 +84,7 @@ public class UserProfileServiceImpl implements UserProfileService {
         String fileName = profileImagePath.getOriginalFilename(); // 사용자 컴퓨터나 핸드폰에 저장된 이름 그대로 가져오기
 
         // 4. 파일에서 이미지 저장할 경로와 이미지이름을 합치기
-        File imageFile = new File(baseDir + fileName);
+        File imageFile = new File(projectDir + fileName);
 
 
         try { // 이미지를 저장할 때 생길 문제를 미리 방지
@@ -90,6 +100,9 @@ public class UserProfileServiceImpl implements UserProfileService {
             user.setAccountBalance(accountBalance);
             user.setGender(gender);
             user.setHobbies(hobbies);
+            //System.getProperty("user.dir") +"/src/main/resources/static/images/profile_img/";
+            user.setProfileImagePath("/images/profile_img/" + fileName); // -> static 아래에있는 이미지 경로이기 때문에 static 이전폴더는 모두 생략
+           // user.setProfileImagePath(imageFile.getAbsolutePath()); //프로필 이미지를 저장하고 저장한 경로 가져오기
 
             userProfileMapper.insertUser(user);
 
