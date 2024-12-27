@@ -1,0 +1,68 @@
+@Bean
+-> 스프링에서 객체나 메서드를
+   스프링이 자유롭게 사용할 수 있도록 허용
+
+@Controller
+-> 기본적으로 Bean 이 내장되어 있는 상태에서
+   service와 html 중간에 데이터 전달해주는 역할
+   데이터 전달해주는 장소 = endpoint - api = url = /
+
+@Autowired
+-> 스프링에서 객체나 메서드를 자요롭게 사용할 수 있도록
+    권한 허용 받은 Bean 객체를 활용해서 사용하겠다
+
+HTTP 메서드 (HTTP 기능)
+Get = 데이터를 조회하거나 화면을 반환하는 데 사용
+@GetMapping
+-> 위 기능을 감싸서 특정 api 주소에서 진행하겠다
+
+Post = 데이터를 전송하거나 저장하는 데 사용
+@PostMapping
+-> 위 기능을 감싸서 특정 api 주소에서 진행하겠다
+
+@RequestParam
+-> 요청한 데이터에서 특정 키 와 값을 추출해서 변수에 할당
+-> 기본적으로 required=true 상태이고, 값이 비어있으면 예외 발생
+-> 필수가 아니라 선택적인 키라면 required=false 를 사용
+
+    ex) DB에서 not null 은 @RequestParam 값을 넣어주지만
+                   null 은 @RequestParam (required=false) String 변수명
+                   해주면 false가 적혀있는 특정 변수명에 값이 없어도 문제가 발생하지 않음
+                   프로필사진 저장과 같은 특수 경우에 사용
+
+    검색할 때 주로 사용
+    ex)
+    @GetMapping("/search")
+    public String search(@RequestParam("keyword") String keyword, Model model){
+        model.addAttribute("result", "검색어 : " + keyword);
+        return "search";
+    }
+
+    api = endpoint = url 주소값 결과
+    GET / search?keyword=검색단어
+
+
+
+
+
+
+@PathVariable
+-> 변할 수 있는 값을 전달해서 주소값으로 사용
+   html에서 선택한 특정 번호의 페이지나 특정 사람의 변수명을 주소값의 일부로 사용하고,
+   선택한 값에 따라 변수명에 저장된 값으로 주소가 변경
+   @PathVariable 을 사용하면 Mapping("{}") {}로 변수명을 받음
+
+   ex)
+   @GetMapping("/users/{id}"
+   public String getUser(@PathVariable("id") int userId) {
+            return "user-detail";
+   }
+   => int userId 는 DTO에 작성한 변수명으로 가져온 숫자값을 주소변수이름인 id에 전달
+
+
+
+
+
+
+
+@ModelAttribute

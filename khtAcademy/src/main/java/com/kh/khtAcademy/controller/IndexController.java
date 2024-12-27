@@ -121,6 +121,23 @@ public class IndexController {
        return "detail";
     }
 
+    @GetMapping("/search.naver")
+    public String naverSearch(@RequestParam("query") String query, Model model){
+        model.addAttribute("query", query);
+        return "naver-search";
+    }
+
+
+
+
+
+
+
+
+
+
+
+
     /*
     * controller - Get - Post - RequestParam
     * */
