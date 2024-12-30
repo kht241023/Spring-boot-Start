@@ -2,6 +2,7 @@ package com.kh.khtAcademy.controller;
 
 import com.kh.khtAcademy.dto.User;
 import com.kh.khtAcademy.service.UserProfileService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -127,6 +128,44 @@ public class IndexController {
         return "naver-search";
     }
 
+
+    // /login 주소로 접속하면 login.html에 작성한 화면이 보임
+    @GetMapping("/login")
+    public String login(){
+        return "login";
+    }
+
+
+
+    /**
+     /login 이 post로 mapping 되었기 때문에 login.html 에 작성한 username, email 에 대한 결과를 확인하는 주소값
+     @RequestParam login.html 에서 form 태그 내부나 특정 태그에 작성된 name 값 중 필수로 전달되어야하는 name 명칭에 대해 작성
+
+     * @param username = login.html에서 name=username 으로 작성되어있는 name 명칭
+     * @param email    = login.html에서 name=email      로 작성되어있는 name 명칭
+     * @param model    = login.html에서 요청한 회원 정보를 로그인을 완료한 후 메인페이지에서 회원 정보를 사용할 수 있도록 전달
+     * @param session  = 사용자의 정보를 관리하기 위한 객체 사용자의 세션에 데이터를 저장하거나 기존 데이터를 불러오는데 활용
+     *                   └─── 세션을 이용해서 로그인을 완성한 후 30분 뒤 자동 로그아웃이나 로그아웃 설정 가능
+     * @return         = 로그인 완료 여부에 따라 보여줄 html 작성
+     *                   └─── 로그인 완료시 메인 페이지로 전송
+     *                   └─── 로그인 실패시 로그인 페이지에 머무르기 + 로그인 실패 메세지 전송
+     */
+    @PostMapping("/login")
+    public String login(@RequestParam String username,
+                        @RequestParam String email,
+                        Model model, HttpSession session ){
+        // 유저프로필 서비스 로그인을 진행했을 때에 대한 결과를 가져옴
+        User user = userProfileService.login(username, email);
+        // 1. 로그인에 성공했을 경우 회원정보가 존재할 것
+        if(user != null){
+            session.setAttribute("user", user);
+            return "redirect:/";
+        }
+        // 2. 로그인에 실패했을 경우 회원정보가 null 값일 것 (왜냐하면 정보가 없기 때문)
+
+
+        return "login";
+    }
 
 
 

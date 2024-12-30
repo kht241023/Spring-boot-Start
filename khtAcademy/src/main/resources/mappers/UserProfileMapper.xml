@@ -95,6 +95,12 @@
     </select>
 
 
+    <select id="login">
+        SELECT *
+        FROM USERPROFILE
+        WHERE USERNAME = #{username}
+        AND   EMAIL = #{email}
+    </select>
 
     <!--
     Error  Whitelabel Error Page 에서

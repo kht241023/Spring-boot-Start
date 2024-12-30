@@ -130,6 +130,10 @@ public class UserProfileServiceImpl implements UserProfileService {
         return userProfileMapper.getUser(userId);     //sql문 호출할 수 있도록 mapper에 전달
     }
 
+    @Override
+    public User login(String username, String email) {
+        return userProfileMapper.login(username, email);
+    }
 
 
 }
