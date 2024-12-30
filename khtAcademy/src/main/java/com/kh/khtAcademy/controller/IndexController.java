@@ -143,12 +143,16 @@ public class IndexController {
 
      * @param username = login.html에서 name=username 으로 작성되어있는 name 명칭
      * @param email    = login.html에서 name=email      로 작성되어있는 name 명칭
-     * @param model    = login.html에서 요청한 회원 정보를 로그인을 완료한 후 메인페이지에서 회원 정보를 사용할 수 있도록 전달
+     * @param model    = login.html에서 요청한 회원 정보가 없을 때, 일치하는 회원이 없어 로그인을 할 수 없다는 메세지 전달
+     *
      * @param session  = 사용자의 정보를 관리하기 위한 객체 사용자의 세션에 데이터를 저장하거나 기존 데이터를 불러오는데 활용
      *                   └─── 세션을 이용해서 로그인을 완성한 후 30분 뒤 자동 로그아웃이나 로그아웃 설정 가능
+     *
      * @return         = 로그인 완료 여부에 따라 보여줄 html 작성
      *                   └─── 로그인 완료시 메인 페이지로 전송
      *                   └─── 로그인 실패시 로그인 페이지에 머무르기 + 로그인 실패 메세지 전송
+     * Model model          = @PostMapping 에서는 로그인 실패했을 경우 실패 메세지만 전달
+     * HttpSession session  = @PostMapping 에서는 로그인 성공했을 경우 로그인한 유저 정보 전달
      */
     @PostMapping("/login")
     public String login(@RequestParam String username,
@@ -158,17 +162,33 @@ public class IndexController {
         User user = userProfileService.login(username, email);
         // 1. 로그인에 성공했을 경우 회원정보가 존재할 것
         if(user != null){
-            session.setAttribute("user", user);
-            return "redirect:/";
+            session.setAttribute("loggedInUser", user);
+            return "redirect:/"; // 로그인 성공한 정보를 가지고 메인페이지로 전달하면서 돌아가기
+            /*
+            * redirect = api / endpoint / url 과 같은 주소 명칭 주로 작성
+            * */
         }
         // 2. 로그인에 실패했을 경우 회원정보가 null 값일 것 (왜냐하면 정보가 없기 때문)
+        else {
+            model.addAttribute("fail", "유효하지 않은 유저이름 또는 이메일입니다.");
+            return "login"; //login.html로 전달
+        }
 
+    }
 
-        return "login";
+    // 로그인한 정보를 index.html 이외 로그인한 회원에 정보가 필요한 모든 곳에서 사용할 수 있도록 설정하는
+    // 로그인 정보 탐지 모델
+    @ModelAttribute("loggedInUser")
+    public Object addLoggedInUser(HttpSession session){
+        return  session.getAttribute("loggedInUser");
     }
 
 
-
+    @GetMapping("/logout")
+    public String logout(HttpSession session){
+        session.invalidate(); // invalidate 로그인된 정보를 초기화하면서 없애기
+        return "redirect:/";    // 로그아웃 된 정보를 재설정하면서 index.html 돌아가기
+    }
 
 
 
