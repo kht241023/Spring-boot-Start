@@ -4,19 +4,47 @@
     <meta charset="UTF-8">
     <title>MDCOMPANY - mypage</title>
     <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        .mypage-container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: thistle;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .mypage-container .mypage-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .mypage-container .mypage-header img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 30px;
+        }
+        .mypage-container .mypage-header .user-info {
+            font-size: 20px;
+        }
+        .mypage-container .mypage-header .user-info label {
+            margin-right: 10px;
+        }
+    </style>
 </head>
 <body>
 <th:block th:replace="layout/header :: header"></th:block>
 
 <div class="mypage-container">
     <h1>마이페이지</h1>
-    <div class="detail-item">
-        <label>사진</label>
+    <div class="mypage-header">
+
         <img th:src="${user.profileImagePath != null ?  user.profileImagePath   :  'images/default.png'         }">
-        <br>
-        <label>아이디</label>
-        <p th:text="${ user !=null ?   user.userId     :   '아이디 없음'             }"></p>
-        <br>
+        <div class="user-info">
+            <label>아이디</label>
+            <p th:text="${ user !=null ?   user.userId     :   '아이디 없음'             }"></p>
+        </div>
 
     </div>
 </div>
