@@ -192,6 +192,16 @@ public class IndexController {
 
 
 
+    // mypage.html로 접속할 수 있는 api = /mypage 만들기
+    @GetMapping("/mypage")
+    public String myPage(Model model, HttpSession session){
+
+        Object loggedInUser = session.getAttribute("loggedInUser");
+        if(loggedInUser != null){
+            model.addAttribute("user", loggedInUser);
+        }
+        return "mypage";
+    }
 
 
 
