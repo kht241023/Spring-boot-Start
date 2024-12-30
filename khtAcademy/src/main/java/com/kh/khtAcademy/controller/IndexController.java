@@ -205,9 +205,28 @@ public class IndexController {
 
 
 
+    /*
+    * @GetMapping("/error")
+    * public String getError(){
+    *   return "error"; // .html 기본적으로 작성되어 있기 때문에 error.html로 이동하는 것
+    *                   // "" 파일명 뒤에는 .html 숨겨져 있음
+    * }
+    *
+    * api = url = endpoint 로
+    * /error 를 작성하지 않아도 error.html로 이동하는 이유는
+    * 스프링부트 자체에 기본적으로 /error 주소를 사용해서 WhiteLabel이 작성된
+    * 스프링부트 error.html로 이동하고 있기 때문
+    *
+    * 개발자가 error.html을 만들었기 때문에 스프링부트에서 기본으로 제공하는
+    * error.html로 이동하는 것이 아니라 개발자가 만든 error.html 이동
+    *
+    * */
 
 
     /*
     * controller - Get - Post - RequestParam
     * */
+
+
+    // 검색 새로고침 로그인 유지 -> 쿠키  추후 검증을 통해 로그인 유지할 수 있도록 설정
 }

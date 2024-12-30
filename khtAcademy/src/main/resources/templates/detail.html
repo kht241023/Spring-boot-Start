@@ -12,6 +12,20 @@
     <h1>회원 상세페이지</h1>
     <div class="detail-item">
         <label>사진</label>
+        <!--
+        controller 에서 model 이나 session 이름으로 전달된 값을 th가 받아서 화면에 보여줌
+
+        th = thymeleaf는 db에서 가져와 dto 변수이름에 담겨진 값을 html로 가져와서
+                                사용자들이 해당하는 결과값을 볼 수 있도록 설정해주는 것
+
+        현재 IndexController 에서
+        User user =  userProfileService.getUser(userId);
+        model.addAttribute("user",user);
+        return "detail";
+
+         model.addAttribute 내 "user" 라는 이름으로 user에 담긴 정보를 "detail".html로 가져왔고,
+         가져온 이름을 th로 받아서 사용자 화면에 보여줌
+        -->
         <img th:src="${user.profileImagePath != null ?  user.profileImagePath   :  'images/default.png'         }">
         <br>
        <label>아이디</label>
