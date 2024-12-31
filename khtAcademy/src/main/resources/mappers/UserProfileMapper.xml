@@ -102,6 +102,26 @@
         AND   EMAIL = #{email}
     </select>
 
+    <select id="searchHobby">
+        SELECT *
+        FROM USERPROFILE
+        WHERE HOBBIES LIKE CONCAT('%', #{hobbies}, '%')
+    </select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <!--
     Error  Whitelabel Error Page 에서
     SQL 글자가 보이면 무조건 xml 파일 내 sql 구문 작성이 잘못된 것

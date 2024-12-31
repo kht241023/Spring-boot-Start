@@ -135,5 +135,10 @@ public class UserProfileServiceImpl implements UserProfileService {
         return userProfileMapper.login(username, email);
     }
 
+    @Override
+    public List<User> searchHobby(String hobbies) {
+        return userProfileMapper.searchHobby(hobbies);
+    }
+
 
 }

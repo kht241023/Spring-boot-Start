@@ -204,6 +204,16 @@ public class IndexController {
     }
 
 
+    // 검색 기능
+    @GetMapping("/hobby")
+    public String searchHobby(@RequestParam String hobbies, Model model){
+        List<User> searchUser = userProfileService.searchHobby(hobbies);
+        // hobbies 변수이름에 searchUser로 담겨있는 유저 검색 정보가 들어있음
+        model.addAttribute("hobbies", searchUser);
+        return "hobby"; //.html
+    }
+
+
 
     /*
     * @GetMapping("/error")

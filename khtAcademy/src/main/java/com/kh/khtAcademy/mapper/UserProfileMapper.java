@@ -29,4 +29,11 @@ public interface UserProfileMapper {
 
     // mapper.xml 에 작성한 SQL문 연결하는 메서드명칭 작성
     User login(String username,  String email);
+
+
+    // 정보 하나를 가져올 때는         자료형에 String, int, DTO  파일 명칭을 작성
+
+    // 정보를 두 가지 이상 가져올 때는 자료형에 List 사용해서 가져옴
+    List<User> searchHobby(String hobbies);
+
 }

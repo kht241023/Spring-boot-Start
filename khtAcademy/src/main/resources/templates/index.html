@@ -6,11 +6,19 @@
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-<th:block th:replace="layout/header :: header"></th:block>
+<th:block th:replace="~{layout/header :: header}"></th:block>
 
 <div class="main-container">
     <h1>메인 화면</h1>
     <div>
+        <h3>취미를 검색하세요.</h3>
+        <form action="/hobby" method="get"> <!-- Controller에 있는 searchHobby 기능으로 검색정보 탐색 전달 -->
+
+            <label for="hobbies">취미 검색 : </label>
+            <input type="text" id="hobbies" name="hobbies" placeholder="검색어를 입력하세요." required>
+            <button>검색하기</button>
+
+        </form>
         <table>
             <tr th:each="  u   : ${users}     ">
                 <td th:text="${u.userId}"></td>
@@ -26,6 +34,6 @@
     </div>
 </div>
 
-<th:block th:replace="layout/footer :: footer"></th:block>
+<th:block th:replace="~{layout/footer :: footer}"></th:block>
 </body>
 </html>
