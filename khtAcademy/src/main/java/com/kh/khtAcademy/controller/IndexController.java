@@ -2,6 +2,7 @@ package com.kh.khtAcademy.controller;
 
 import com.kh.khtAcademy.dto.User;
 import com.kh.khtAcademy.service.UserProfileService;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -239,4 +241,17 @@ public class IndexController {
 
 
     // 검색 새로고침 로그인 유지 -> 쿠키  추후 검증을 통해 로그인 유지할 수 있도록 설정
+
+
+
+    @PostMapping("/check-username")
+    public void checkDuplicatedUsername(@RequestParam("username") String username,
+                                        HttpServletResponse response
+                                        ) throws IOException {
+        boolean isDuplicate = userProfileService.checkDuplicatedUsername(username);
+        response.setContentType("application/json");
+        response.getWriter().write("{\"isDuplicate\" : " + isDuplicate + "}");
+    }
+
+
 }

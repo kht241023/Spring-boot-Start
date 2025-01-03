@@ -108,8 +108,12 @@
         WHERE HOBBIES LIKE CONCAT('%', #{hobbies}, '%')
     </select>
 
-
-
+    <!-- 아이디 중복확인 SQL : username이 일치하는 회원이 조회되는 경우 -->
+    <select id="checkDuplicatedUsername">
+    SELECT COUNT(*)
+    FROM USERPROFILE
+    WHERE USERNAME = #{username}
+    </select>
 
 
 

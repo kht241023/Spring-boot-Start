@@ -1,0 +1,47 @@
+AJAX( Asynchronous JavaScript and XML)
+
+웹 페이지를 새로고침하지 않고도 서버와 데이터를 교환할 수 있도록 해주는 기술
+
+AJAX 사용법
+javaScript 를 만든 jQuery 부서에서 AJAX 만듬
+
+
+기본 구조
+
+1. $ JQuery 를 사용한 표기방법
+$.ajax({
+    url:"서버의 URL / api / endpoint / 주소값",  // 요청을 보낼 컨트롤러의 URL 주소값
+    type:"GET",                                  // 요청 방식 : GET, POST, PUT, DELETE
+    data : {
+        키 : "값",
+        키 : "값",
+        Controller-name : HTML&JS-name,
+        name : "홍길동",
+    },
+    success: function(response) { // DB에서 정보 확인이나, 특정값 넣는 것을 성공할 경우 보여줄 기록(=log)
+    console.log("성공 : ", response);
+    },
+    error: function(error) {      // DB에서 정보 확인이나, 특정값 넣는 것을 실패할 경우 보여줄 기록(=log)
+    console.log("실패", error);
+    }
+
+});
+
+
+옵션
+url : 요청을 보낼 controller(서버)의 url
+type : GET, POST, PUT, DELETE
+data : controller로 보내거나 받을 데이터 (객체, 문자열, json 형식)
+contentType : 데이터 타입 지정 -> 글자만, 문자만 와 같은 타입 지정
+success     : controller(서버)로 요청한 값을 전달하거나 가져오는 것을 성공할 경우 보여줄 alert, log
+fail        : controller(서버)로 요청한 값을 전달하거나 가져오는 것을 실패할 경우 보여줄 alert, log
+timeout     : 요청을 기다리는 시간
+                예 ) 인증번호 유효 시간 3분 제한과 같은 설정
+beforeSend  : 컨트롤러에 요청을 시작하기 전에 실행할 함수
+
+
+AJAX를 사용하면 좋은 경우
+1. 검색 필터 : 페이지 새로고침 없이 데이터 검색 필터링
+2. 폼 검증   : 아이디 중복확인, 비밀번호 중복확인
+3. 채팅      : 실시간 메세지 전송 수신
+4. 무한스크롤 : 스크롤시 추가 데이터 로드

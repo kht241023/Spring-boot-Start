@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html xml:th="http://www.thymeleaf.org" lang="ko">
+<html lang="ko" xml:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>MDCOMPANY - 회원가입</title>
-    <link rel="stylesheet" href="/css/styles.css">
+    <link href="/css/styles.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
 <body>
 <th:block th:replace="~{layout/header :: header}"></th:block>
@@ -54,7 +55,7 @@ name : Java 내 존재하는 Controller에 태그 내에 사용자가 선택하�
                                                 사용 : 디버깅(문제찾는) 용도 또는 단순히 온전한 글자 데이터만 전송
 
     -->
-    <form action="/register-success" method="post" enctype="multipart/form-data">
+    <form action="/register-success" enctype="application/x-www-form-urlencoded" method="post">
         <!--  label 태그는 사용자가 input 태그에 어떤 것을 적어야하는지 알려주는 문구
               개발자한테는 의미가 없음
         -->
@@ -64,27 +65,63 @@ name : Java 내 존재하는 Controller에 태그 내에 사용자가 선택하�
              id 이름은 javascript에서 정규식과 같은 확인 동작을 하기위해 필요한 이름
              class 이름은 css(=스타일) 적용을 위한 기능 이름
              -->
-        <label for="username">이름</label>
-        <input type="text" id="username" name="username"   required>
+        <div>
+            <label for="username">이름</label>
+            <input id="username" name="username" required type="text">
+            <button id="checkBtn" type="button">중복확인</button>
+            <p id="checkResult" style="color:red; font-size: 14px"></p>
+        </div>
 
+        <script>
+            /* class 명칭을 가져올 때는 .
+                 id 명칭을 가져올 때는 #
+                 태그는 아무것도 붙이지않고 가져옴
+            */
+            $(document).ready(function () {
+                $('#checkBtn').click(function () {
+                    const username = $('#username').val();
+                    if(!username){
+                        alert('유저 이름을 입력하세요');
+                        return; //유저 이름이 빈 값이기 때문에 돌려보내기
+                    }
+
+                    $.ajax({
+                        url: '/check-username',
+                        type: 'POST',
+                        data: {username: username},
+                        success: function (response) {
+                            if (response.isDuplicate) {
+                                $('#checkResult').text('이미 사용중인 유저이름입니다.');
+                            } else {
+                                $('#checkResult').text('사용가능한 유저이름입니다.').css('color', 'green');
+                            }
+                        },
+                        error: function () {
+                            alert('서버 요청 중 오류가 발생했습니다. 유저네임 중복확인 불가합니다.');
+                        }
+                    });
+                });
+            });
+
+        </script>
         <label for="email">이메일</label>
-        <input type="email" id="email" name="email" required>
+        <input id="email" name="email" required type="email">
 
         <label for="birthdate">생년 월일 </label>
-        <input type="date" id="birthdate" name="birthdate" required>
+        <input id="birthdate" name="birthdate" required type="date">
 
         <label for="accountBalance">계좌잔액</label>
-        <input type="number"    id="accountBalance" name="accountBalance" required>
+        <input id="accountBalance" name="accountBalance" required type="number">
         <!--
         label 내부에 for를 작성하고 싶지 않다면 label 태그로 input이나 다른 태그 감싸기
         for 는 id와 연결됨
         -->
         <label>성별 : </label> <!-- 연결해서 성별을 눌렀을 때 버튼처럼 사용될 것이 없기 때문에 for 작성할 이유가 없음 -->
         <label>
-            <input type="radio" id="male"           name="gender"        value="MALE">남성
+            <input id="male" name="gender" type="radio" value="MALE">남성
         </label>
         <label>
-            <input type="radio" id="female"          name="gender"       value="FEMALE">여성
+            <input id="female" name="gender" type="radio" value="FEMALE">여성
         </label>
 
         <label for="hobbies">취미 : </label>
@@ -93,26 +130,20 @@ name : Java 내 존재하는 Controller에 태그 내에 사용자가 선택하�
             <option value="SPORTS">운동</option>
             <option value="RUNNING">달리기</option>
         </select>
-    <label for="profileImagePath" class="file-label">프로필사진 설정하기</label>
-        <input type="file" id="profileImagePath" name="profileImagePath">
-    <!--
-    button 기본 타입 submit 이므로 가입할 때 제출하기 전에
-    아이디 비밀번호 이메일을 정규식대로 작성은 잘 했는지 와 같은 체크를 하고 제출이 되길 원한다면
-    type="button"으로 변경하고
-    자바스크립트 id나 기능설정이름 작성 후
-    e.preventDefault() 코드를 맨 윗줄에 넣어 제출과 같은 동작 지연
-    -->
-    <button type="submit">가입하기</button>
+        <label class="file-label" for="profileImagePath">프로필사진 설정하기</label>
+        <input id="profileImagePath" name="profileImagePath" type="file">
+        <!--
+        button 기본 타입 submit 이므로 가입할 때 제출하기 전에
+        아이디 비밀번호 이메일을 정규식대로 작성은 잘 했는지 와 같은 체크를 하고 제출이 되길 원한다면
+        type="button"으로 변경하고
+        자바스크립트 id나 기능설정이름 작성 후
+        e.preventDefault() 코드를 맨 윗줄에 넣어 제출과 같은 동작 지연
+        -->
+        <button type="submit">가입하기</button>
     </form>
 
 
 </div>
-
-
-
-
-
-
 
 
 <th:block th:replace="~{layout/footer :: footer}"></th:block>
