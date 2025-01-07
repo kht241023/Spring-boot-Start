@@ -1,0 +1,6 @@
+####
+ajax, servlet -> javascript, java 기반
+jquery -> ajax 와 같은 기능을 만드는 javascript 부서
+따로 홈페이지도 존재함!!
+
+config 와 비밀번호암호화 같은 설정
