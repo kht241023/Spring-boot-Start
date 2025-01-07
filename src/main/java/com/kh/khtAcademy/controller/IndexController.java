@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -44,13 +45,13 @@ public class IndexController {
     // DB에 값을 집어넣을 때는 PostMapping 사용하고 엔드포인트 form action에서 작성한
     // 주소를 엔드포인트로 지정
     /*
-    *  Whitelabel Error Page Current request is not a multipart request
-    *  1. html 파일에서 enctype="multipart/form-data" 데이터 설정을 했는지 확인
-    *  2. springboot  파일업로드를 지원할 수 있도록 설정 했는지 application.properties / config.properties 확인
-    * spring.servlet.multipart.enabled=true  -> 사진 업로드 허용
-    * spring.servlet.multipart.max-file-size=10MB ->파일 하나당 최대 10MB
+     *  Whitelabel Error Page Current request is not a multipart request
+     *  1. html 파일에서 enctype="multipart/form-data" 데이터 설정을 했는지 확인
+     *  2. springboot  파일업로드를 지원할 수 있도록 설정 했는지 application.properties / config.properties 확인
+     * spring.servlet.multipart.enabled=true  -> 사진 업로드 허용
+     * spring.servlet.multipart.max-file-size=10MB ->파일 하나당 최대 10MB
      * spring.servlet.multipart.max-request-size=10MB -> 한번에 업로드 가능한 모든 파일에 총합 크기
-    * */
+     * */
     @PostMapping("/register-success")
     public String registerSuccess( @RequestParam("username")   String username,
                                    @RequestParam("email")    String email,
@@ -59,7 +60,7 @@ public class IndexController {
                                    @RequestParam("gender")   String gender,
                                    @RequestParam("hobbies")   String hobbies,
                                    @RequestParam("profileImagePath")   MultipartFile profileImagePath,
-                                      Model model) {
+                                   Model model) {
 
         userProfileService.insertUser(username, email, birthdate, accountBalance, gender, hobbies, profileImagePath);
 
@@ -100,8 +101,8 @@ public class IndexController {
     public String findByEmail(@RequestParam("username")String username,
                               @RequestParam("gender") String gender,
                               Model model){
-            userProfileService.findByEmail(username,gender);
-            model.addAttribute("email", userProfileService.findByEmail(username,gender));
+        userProfileService.findByEmail(username,gender);
+        model.addAttribute("email", userProfileService.findByEmail(username,gender));
         return "find-email-result";
     }
 
@@ -119,9 +120,9 @@ public class IndexController {
             1. String 작성해보기   2. Model 작성해보기  3. DTO에 작성한 클래스명칭 작성해보기
             ※ 단 자료형이 void일 경우 변수명 설정이 어려움
         */
-       User user =  userProfileService.getUser(userId);
-       model.addAttribute("user",user);
-       return "detail";
+        User user =  userProfileService.getUser(userId);
+        model.addAttribute("user",user);
+        return "detail";
     }
 
     @GetMapping("/search.naver")
@@ -139,11 +140,11 @@ public class IndexController {
 
 
 
-    /**
+    /*
      /login 이 post로 mapping 되었기 때문에 login.html 에 작성한 username, email 에 대한 결과를 확인하는 주소값
      @RequestParam login.html 에서 form 태그 내부나 특정 태그에 작성된 name 값 중 필수로 전달되어야하는 name 명칭에 대해 작성
 
-     * @param username = login.html에서 name=username 으로 작성되어있는 name 명칭
+      * @param username = login.html에서 name=username 으로 작성되어있는 name 명칭
      * @param email    = login.html에서 name=email      로 작성되어있는 name 명칭
      * @param model    = login.html에서 요청한 회원 정보가 없을 때, 일치하는 회원이 없어 로그인을 할 수 없다는 메세지 전달
      *
@@ -157,6 +158,26 @@ public class IndexController {
      * HttpSession session  = @PostMapping 에서는 로그인 성공했을 경우 로그인한 유저 정보 전달
      */
     @PostMapping("/login")
+    @ResponseBody //JSON 형식으로 로그인에 대한 정보 받기
+    public Map<String, Object> login(@RequestParam String username,
+                                     @RequestParam String email,
+                                     HttpSession session){
+        Map<String, Object> response = new HashMap<String, Object>();
+        User user = userProfileService.login(username, email);
+
+        if(user != null){
+            session.setAttribute("loggedInUser", user); //로그인 성공했을 경우 session에서 loggedInUser 라는 이름으로 로그인한 유저 정보 저장
+            response.put("loggedIn", true);
+            response.put("message", "로그인 성공했습니다.");
+        } else {
+            response.put("loggedIn", false);
+            response.put("message", "로그인에 실패했습니다.");
+        }
+        return response;
+    }
+
+    /*
+    @PostMapping("/login")
     public String login(@RequestParam String username,
                         @RequestParam String email,
                         Model model, HttpSession session ){
@@ -167,8 +188,8 @@ public class IndexController {
             session.setAttribute("loggedInUser", user);
             return "redirect:/"; // 로그인 성공한 정보를 가지고 메인페이지로 전달하면서 돌아가기
             /*
-            * redirect = api / endpoint / url 과 같은 주소 명칭 주로 작성
-            * */
+             * redirect = api / endpoint / url 과 같은 주소 명칭 주로 작성
+             ** /
         }
         // 2. 로그인에 실패했을 경우 회원정보가 null 값일 것 (왜냐하면 정보가 없기 때문)
         else {
@@ -177,7 +198,7 @@ public class IndexController {
         }
 
     }
-
+    */
     // 로그인한 정보를 index.html 이외 로그인한 회원에 정보가 필요한 모든 곳에서 사용할 수 있도록 설정하는
     // 로그인 정보 탐지 모델
     @ModelAttribute("loggedInUser")
@@ -218,26 +239,26 @@ public class IndexController {
 
 
     /*
-    * @GetMapping("/error")
-    * public String getError(){
-    *   return "error"; // .html 기본적으로 작성되어 있기 때문에 error.html로 이동하는 것
-    *                   // "" 파일명 뒤에는 .html 숨겨져 있음
-    * }
-    *
-    * api = url = endpoint 로
-    * /error 를 작성하지 않아도 error.html로 이동하는 이유는
-    * 스프링부트 자체에 기본적으로 /error 주소를 사용해서 WhiteLabel이 작성된
-    * 스프링부트 error.html로 이동하고 있기 때문
-    *
-    * 개발자가 error.html을 만들었기 때문에 스프링부트에서 기본으로 제공하는
-    * error.html로 이동하는 것이 아니라 개발자가 만든 error.html 이동
-    *
-    * */
+     * @GetMapping("/error")
+     * public String getError(){
+     *   return "error"; // .html 기본적으로 작성되어 있기 때문에 error.html로 이동하는 것
+     *                   // "" 파일명 뒤에는 .html 숨겨져 있음
+     * }
+     *
+     * api = url = endpoint 로
+     * /error 를 작성하지 않아도 error.html로 이동하는 이유는
+     * 스프링부트 자체에 기본적으로 /error 주소를 사용해서 WhiteLabel이 작성된
+     * 스프링부트 error.html로 이동하고 있기 때문
+     *
+     * 개발자가 error.html을 만들었기 때문에 스프링부트에서 기본으로 제공하는
+     * error.html로 이동하는 것이 아니라 개발자가 만든 error.html 이동
+     *
+     * */
 
 
     /*
-    * controller - Get - Post - RequestParam
-    * */
+     * controller - Get - Post - RequestParam
+     * */
 
 
     // 검색 새로고침 로그인 유지 -> 쿠키  추후 검증을 통해 로그인 유지할 수 있도록 설정
@@ -247,7 +268,7 @@ public class IndexController {
     @PostMapping("/check-username")
     public void checkDuplicatedUsername(@RequestParam("username") String username,
                                         HttpServletResponse response
-                                        ) throws IOException {
+    ) throws IOException {
         boolean isDuplicate = userProfileService.checkDuplicatedUsername(username);
         response.setContentType("application/json");
         response.getWriter().write("{\"isDuplicate\" : " + isDuplicate + "}");
